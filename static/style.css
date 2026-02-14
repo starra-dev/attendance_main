@@ -1,14 +1,8 @@
-table ,th, td {
-    border:1px solid;
-   border-collapse: collapse;
-  
-   
+nav{
+    background-color: aqua;
 
 }
-html,body ,table {
-    text-align: center;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
+section{
+    border: solid 0.5px;
+    display: grid;
 }
