@@ -6,6 +6,7 @@
 }
 .container{
     display: flex;
+    background: rgba(255, 255, 255, 0.9);
   
 }
 
@@ -16,6 +17,8 @@
     padding: 20px;
     position:fixed;
     height: 100vh;
+    border-radius: 10px;
+    border-right: solid;
    
 }
 
@@ -51,6 +54,8 @@ main{
     border: 1px solid black;
     padding: 11px;
     height: 50px;
+    border-radius: 15px;
+    
 
 
 }
