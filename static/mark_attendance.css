@@ -1,15 +1,56 @@
-form{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 100px;
-    border: 1px solid #ccc;
-    padding: 20px;
+.container {
     width: 300px;
-    background-color: rgba(0, 149, 255, 0.648);
-    border-radius: 10px;
-    height: 400px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid 1px black;
     text-align: center;
 
+}
+.checkin{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+body {
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #f4f6f9;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 50px;
+    background: #311803b9;
+    color: white;
+    border-radius: 18px;
+}
+
+.logo {
+    font-size: 15px;
+    font-weight: bold;
+    
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+}
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
 }
 
