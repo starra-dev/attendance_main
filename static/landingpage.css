@@ -1,0 +1,232 @@
+
+body {
+    background: #f4f6f9;
+}
+
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 50px;
+    background: #311803b9;
+    color: white;
+    border-radius: 18px;
+}
+
+.logo {
+    font-size: 15px;
+    font-weight: bold;
+    
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+}
+
+.btn-login, .btn-register {
+    padding: 6px 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-login {
+    background: #3498db;
+    color: white;
+}
+
+.btn-register {
+    background: #2ecc71;
+    color: rgba(71, 182, 44, 0.11);
+}
+
+
+.hero {
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to right, #3498db, #2ecc71);
+    color: white;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 80px;
+}
+
+.btn-primary {
+    padding: 10px 20px;
+    margin-top: 20px;
+    border-radius: var(--radius);
+    background: #2c3e50;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+:root {
+  --pink: #ff5fa2;
+  --green: #2ecc71;
+  --dark-grey: #444;
+  --light-bg: #f9f9f9;
+  --radius: 18px;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+.landing {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.landing h1 {
+  font-size: 3rem;
+  color: var(--pink);
+}
+
+.landing p {
+  color: var(--dark-grey);
+  margin: 15px 0 30px;
+}
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 300px;
+    margin-top: 30px;
+}
+
+.card {
+    background: rgb(216, 238, 91);
+    padding: 10px;
+    border-radius: 18px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    height: 100px;
+}
+
+.dashboard-cards {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.dashboard-card {
+    background: rgba(176, 179, 26, 0);
+    padding: 30px;
+    width: 200px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.contact form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 400px;
+    margin: auto;
+    outline: none;
+
+}
+
+.contact input, .contact textarea {
+    padding: 10px;
+    border: 1px solid #f5f3f3;
+    border-radius: 5px;
+}
+
+footer {
+    background: #2c3e50;
+    color: white;
+    padding: 20px;
+}
+ .form-box h3 {
+      color: var(--neon-pink);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    section {
+      padding: 60px 15%;
+      text-align: center;
+    }
+ .auth-card h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--dark-grey);
+}
+
+.auth-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.auth-card input {
+  padding: 12px;
+  border-radius: var(--radius);
+  border: 2px solid var(--dark-grey);
+  outline: none;
+}
+
+.auth-card input:focus {
+  border-color: var(--pink);
+}
+
+
+.social-login {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.social-login p {
+  color: var(--dark-grey);
+  margin-bottom: 10px;
+}
+.social-login button {
+  background: #3b5998; 
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  gap: 10px;
+}
+.icons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.icons i {
+  font-size: 20px;
+  color: #fff;
+  background: var(--dark-grey);
+  padding: 12px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.icons i:hover {
+  background: var(--pink);
+  transform: scale(1.1);
+}
+.submit-btn {
+  background: var(--green);
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  background: linear-gradient(90deg, #00fff0, #00fff0);
+  font-weight: bold;
+  margin-top: 10px;
+}
+

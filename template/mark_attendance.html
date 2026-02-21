@@ -3,11 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/attendance.css">
 
-    <title>Document</title>
+    <title>Student Attendance</title>
 </head>
 <header>
-    <h1>ATTENDANCE</h1>
+    <h1>ATTENDANCE TRACKER</h1>
 </header>
-<body></body>
+<body>
+    <nav>
+         <img src="My12.png" alt="Logo" class="logo">
+        <a href="/">Home</a>
+        <a href="/about">About Us</a>
+        <a href="/contact">Contact Us</a>
+        <a href="/course">Course</a>
+    </nav>
+    <!---Landing Page-->
+    <section class="landing">
+    <h1>Welcome to Student Attendance</h1>
+    <p>Track your attendance and stay on top of your classes!</p>
+    <div class="landing-buttons">
+    <a href="#login" class="btn">Login</a>
+    <a href="#signup" class="btn">Sign Up</a>
+    </div>
+    </section>
+    <!---Login Form-->
+    <section class="auth-card login" id="login">
+        <h2>Login</h2>
+        <form>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit" class="btn">Login</button>
+        </form>
+        <!--Sign Up Form-->
+        <section class="auth-card signup" id="signup">
+            <h2>Sign Up</h2>
+            <form>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="email-signup">Email:</label>
+                <input type="email" id="email-signup" name="email-signup" required>
+                <label for="password-signup">Password:</label>
+                <input type="password" id="password-signup" name="password-signup" required>
+                <button type="submit" class="btn">Sign Up</button>
+            </form>
+            <p>
+                By signing up, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+            </p>
+        </section>
+        <div class="socila-login">
+        <p>Or login with:</p>
+        <div class="social-buttons">
+            <a href="#" class="btn social-btn">Google</a>
+            <a href="#" class="btn social-btn">Facebook</a>
+            <a href="#" class="btn social-btn">Twitter</a>
+            <a href="#" class="btn social-btn">LinkedIn</a>
+            <a href="#" class="btn social-btn">GitHub</a>
+            <a href="#" class="btn social-btn">Instagram</a>
+            <a href="#" class="btn social-btn">Apple</a>
+            <a href="#" class="btn social-btn">X</a>
+
+        </div>
+            <section class="footer">
+                <p>&copy;Jademovie 2026 Student Attendance. All rights reserved.</p>
+</section>
+
+</body>
 </html>
