@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <p><button>Student Attendance</button></p>
+            <p><button>Staff Attendance</button></p>
+            <p><button>Total Student Attendance</button></p>
+            <p><button>Total Staff Attendance</button></p>
+        </div>
+        <div class="profile-card"> 
+            <img src="{{ user.profile_pic }}" alt="Profile Picture" width="200px" height="250px"> 
+            <h1>Welcome, {{ username }}!</h1> 
+            <p>Fullname: {{ fullname }}</p> 
+            <p>Email: {{ email }}</p> 
+            <p>Total Present: {{ total_present }}</p> 
+            <p>Member since: {{ join_date }}</p> 
+        </div>
+    </div>
+</body>
+</html>
