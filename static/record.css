@@ -93,4 +93,10 @@ li{
     color: white;
 }
 
-
+.nav-links a:hover{
+    background: #310e03;
+    border-radius: 5%;
+}
+.nav-links a:before{
+     width: 95%;
+}

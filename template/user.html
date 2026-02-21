@@ -3,24 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/user.css">
     <title>User Profile</title>
 </head>
+<header>
+    <nav class="navbar">
+        <div class="logo">Student Attendance</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#feature">Feature</a></li>
+            <li><a href="#dashboard">Dashboard</a></li>
+            <li><a href="#report">Report</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#register">Register</a></li>
+        </ul>
+    </nav>
+</header>
 <body>
-    <div class="container">
-        <div class="sidebar">
-            <p><button>Student Attendance</button></p>
-            <p><button>Staff Attendance</button></p>
-            <p><button>Total Student Attendance</button></p>
-            <p><button>Total Staff Attendance</button></p>
-        </div>
+ <div class="container">
+  <nav class="sidebar">
+   <ul>
+    <li><a href="#">Homepage</a></li>
+    <li><a href="#">Attendance</a></li>
+    <li><a href="#">Record</a></li>
+    <li><a href="#">User</a></li>
+   </ul>
+  </nav>
+ </div>
+ <div class="main">
         <div class="profile-card"> 
             <img src="{{ user.profile_pic }}" alt="Profile Picture" width="200px" height="250px"> 
+        </div>
             <h1>Welcome, {{ username }}!</h1> 
             <p>Fullname: {{ fullname }}</p> 
             <p>Email: {{ email }}</p> 
             <p>Total Present: {{ total_present }}</p> 
-            <p>Member since: {{ join_date }}</p> 
-        </div>
+            <p>Registered since: {{ join_date }}</p> 
     </div>
+ </div>
 </body>
 </html>
