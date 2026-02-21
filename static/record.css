@@ -2,8 +2,25 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-
+    font-family: "Segoe UI", sans-serif;
 }
+
+.nav-links{
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 50px;
+    background: #311803b9;
+    color: white;
+    border-radius: 18px;
+}
+
 .container{
     display: flex;
     background: rgba(255, 255, 255, 0.9);
@@ -12,7 +29,7 @@
 
 .sidebar{
     width: 250px;
-    background-color: blue;
+    background: #311803b9;
     color: white;
     padding: 20px;
     position:fixed;
@@ -35,7 +52,7 @@
 }
 
 .sidebar a:hover{
-    background-color:rgba(0, 255, 255, 0.726);
+    background: #310e03;
     border-radius: 10px;
 
 }
@@ -51,7 +68,7 @@ main{
 }
 .searchbar{
     width: 100%;
-    border: 1px solid rgba(0, 255, 255, 0.726);
+    border: 1px solid #311803b9;;
     padding: 11px;
     height: 50px;
     border-radius: 15px;
@@ -62,6 +79,18 @@ main{
 }
 li{
     font-size: 25px;
+    list-style-type: none;
+    margin: 10px; 
+
+}
+.nav-links ul li{
+    text-align: right;
+
+}
+
+.nav-links a{
+    text-decoration: none;
+    color: white;
 }
 
 
