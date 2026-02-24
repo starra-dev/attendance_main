@@ -11,17 +11,22 @@
 </header>
 <body>
        
-    <div class="container">
+    <section class="auth-card signup" id="signup">
         <div class="center">
-           <h1>Registration</h1>
-            <div class="input"></div>
-              <input type="text" placeholder="Name"><br>
-              <input type="text" placeholder="Username"><br>
-              <input type="text" placeholder="Email"><br>
-              <button>Register</button>
-            </div>
-       </div>
-    </div> 
+            <h2>Sign Up</h2>
+            <h3>Welcome to the Smart Student Attendance</h3>
+            <form>
+            
+                <input type="text" id="name" name="name" placeholder="Name" required><br>
+                <input type="email" id="email-signup" name="email-signup" placeholder="Email" required><br>
+                <input type="password" id="password-signup" name="password-signup" placeholder="Password" required><br>
+                <input type="checkbox" id="terms" name="terms" required>
+                <label for="terms">I agree to the Terms of Service and Privacy Policy</label><br>
+                <button>Submit</button>
+                <p>Already have an account?<a href="login.html">login</a></p>
+            </form>
+        </div>
+    </section>  
       
 
 </body>
