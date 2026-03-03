@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../static/report.css">
+  <title>Student Attendance Report</title>
+</head>
+<header>
+    <nav class="navbar">
+        <div class="logo">Student Attendance</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#feature">Feature</a></li>
+            <li><a href="#dashboard">Dashboard</a></li>
+            <li><a href="#report">Report</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#register">Register</a></li>
+        </ul>
+    </nav>
+</header>
+<body>
+  <div class="container">
+    <h1>Student Attendance Report</h1>
+    <table id="attendanceTable">
+      <thead>
+        <tr>
+          <th>Student Name</th>
+          <th>Date</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for record in attendance_records %}
+        <tr>
+          <td>{{ record.student_name }}</td>
+          <td>{{ record.date }}</td>
+          <td>{{ record.status }}</td>
+        </tr>
+        {% endfor %}
+        <tbody>
+        <tr>
+          <td>Amusan Oluwapelumi</td>
+          <td>2026-02-24</td>
+          <td class="present">Present</td>
+        </tr>
+        <tr>
+          <td>Adewale Samuel</td>
+          <td>2026-02-24</td>
+          <td class="absent">Absent</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
