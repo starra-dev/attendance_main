@@ -35,7 +35,7 @@ class Checkin(Base):
     # Audit Fields
     Date: Mapped[date] = mapped_column(date , date.now(),) # TRYING TO ADD A DATE FUNCTION HERE
     timestamp:Mapped[datetime] = mapped_column(DateTime (timezone=True), default=lambda: datetime.now(),)
-    action: Mapped[bool] = mapped_column(bool, default=False nullable=False) # E.g., 'INSERT', 'UPDATE'
+    action: Mapped[bool] = mapped_column(bool, default=False ,nullable=False) # E.g., 'INSERT', 'UPDATE'
    
 
 
