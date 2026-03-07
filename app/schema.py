@@ -8,15 +8,19 @@ class UserBase(BaseModel):
    
 class UserCreate(UserBase):
     name : str = Field(min_length=1 , max_length=50)
+    password : str = Field(min_length=8 )
 
 
-class UserResponse(UserBase):
+class UserPublic(BaseModel):
     model_config =ConfigDict(from_attributes=True)
     name :str
     id : int
-    checkin: str
     image_file : str | None
     image_path : str
+
+class UserPrivate(UserPublic):
+    email: EmailStr
+    
 
 
 class CheckLogBase(BaseModel):
@@ -24,13 +28,13 @@ class CheckLogBase(BaseModel):
 
 
 class ChecklogCreate(CheckLogBase):
+    user_id: int                   # identifier of the user performing the checkin
     date: date
     timezone: datetime
-    action:bool
+    action: bool
 
 class CheckLogResponse(CheckLogBase):
     model_config =ConfigDict(from_attributes=True)
     
-    
-    user_id : int
-    date : datetime
+    user_id: int 
+    date: date

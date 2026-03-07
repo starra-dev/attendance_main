@@ -11,7 +11,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPEception
 
 import app.models as models
 from app.database import engine , Base , get_db
-from app.schema import  UserCreate ,UserResponse,CheckLogResponse,ChecklogCreate
+from app.schema import  UserCreate ,UserPublic,CheckLogResponse,ChecklogCreate,UserPrivate
  
 Base.metadata.create_all(bind=engine)
 
@@ -54,55 +54,55 @@ def create_user(user:UserCreate, db: Annotated[Session , Depends(get_db)]):
     return new_user
 
       
-@app.get ("/api/user/{user_id}", response_model=UserResponse,)
-def get_user(user_id, db: Annotated[Session , Depends(get_db)]):
-     result = db.execute (   select(models.User) .where(models.User.user_id == user.user_id))
-     user = result.scalars.first()
+@app.get ("/api/user/{user_id}", response_model=UserPublic)
+def get_user(user_id: int, db: Annotated[Session , Depends(get_db)]):
+    # query by the primary key field `id` and use the parameter directly
+    result = db.execute(select(models.User).where(models.User.id == user_id))
+    user = result.scalars().first()
 
-     if user:
-         return user
-     
-     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User is not found")
+    if user:
+        return user
+    
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
 
 
 
 @app.post ("/api/checkin", response_model=CheckLogResponse, status_code = status.HTTP_201_CREATED)
 def check_in(checkin:ChecklogCreate, db: Annotated[Session , Depends(get_db)]):
-   result = db.execute (   select(models.CheckLog.Date) .where(models.CheckLog.Date == checkin.Date))
-   existing_log = result.scalars.first()
+    # make sure schema includes user_id (add if missing)
+    result = db.execute(select(models.Checkin).where(models.Checkin.user_id == checkin.user_id))
+    existing_log = result.scalars().first()
 
-   if existing_log:
-       raise HTTPException(
-           status_code= status.HTTP_403_FORBIDDEN,
-           detail= "User Already Checkedin"
-       )
-   new_checkin = models.CheckLog(
-       action = checkin.action
-   )
-   db.add(checkin)
-   db.commit()
-   db.refresh(checkin)
+    if existing_log:
+        raise HTTPException(
+            status_code= status.HTTP_403_FORBIDDEN,
+            detail="User already checked in"
+        )
+    new_checkin = models.Checkin(
+        user_id=checkin.user_id,
+        action=checkin.action,
+        Date=checkin.date  # if you intend to store the provided date
+    )
+    db.add(new_checkin)
+    db.commit()
+    db.refresh(new_checkin)
 
-   return checkin
+    return new_checkin
 
     
-@app.get ("/api/checkin/{user_id}/checkins}", response_model=list[CheckLogResponse])
-def get_user_log(user_id:int, db: Annotated[Session , Depends(get_db)]): # i want to retrive the user checkin log with thi function
-    result = db.execute(select(models.User) .where(models.User.id == user_id))
+@app.get ("/api/checkin/{user_id}/checkins", response_model=list[CheckLogResponse])
+def get_user_log(user_id:int, db: Annotated[Session , Depends(get_db)]):
+    # verify that the user exists before fetching logs
+    result = db.execute(select(models.User).where(models.User.id == user_id))
     user = result.scalars().first()
 
     if not user:
-        raise HTTPException (
+        raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="User not found"
         )
-    result = db.execute(select(models.Checkin) .where(models.Checkin.user_id == user_id))
+    result = db.execute(select(models.Checkin).where(models.Checkin.user_id == user_id))
     logs = result.scalars().all()
     return logs
 
-
-
-
-   
-
-    
+ 
