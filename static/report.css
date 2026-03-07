@@ -1,0 +1,93 @@
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 20px;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+#attendanceTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+#attendanceTable th,
+#attendanceTable td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+#attendanceTable th {
+  background-color: #8B5E3C;
+  color: white;
+}
+
+.present {
+  color: brown;
+  font-weight: bold;
+}
+
+.absent {
+  color: red;
+  font-weight: bold;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 10px;
+  }
+  #attendanceTable th, #attendanceTable td {
+    padding: 8px;
+  }
+}
+body {
+    background: #f4f6f9;
+}
+
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 50px;
+    background:#8B5E3C;
+    color: white;
+    border-radius: 18px;
+}
+
+.logo {
+    font-size: 15px;
+    font-weight: bold;
+    
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+}
+.btn-login, .btn-register {
+    padding: 6px 10px;
+    border: none;
+    cursor: pointer;
+}
