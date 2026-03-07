@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 *{
     margin: 0;
     padding: 0;
@@ -55,6 +57,7 @@
     height: 300px;
 }
 
+>>>>>>> 3946bcef679455fd6983ac82e19c63da442de7bd
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -62,6 +65,42 @@
     background: #311803b9;
     color: white;
     border-radius: 18px;
+}
+
+<<<<<<< HEAD
+.logo {
+    font-size: 15px;
+    font-weight: bold;
+    
+}
+
+=======
+>>>>>>> 3946bcef679455fd6983ac82e19c63da442de7bd
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+<<<<<<< HEAD
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 50px;
+    background: #311803b9;
+    color: white;
+    border-radius: 18px;
+}
+
+.logo {
+    font-size: 15px;
+    font-weight: bold;
+    
 }
 
 .nav-links {
@@ -74,4 +113,16 @@
 .nav-links a {
     color: white;
     text-decoration: none;
+}
+body {
+    background: #f4f6f9;
+}
+.hero h1 {
+    font-size: 80px;
+}
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+=======
+>>>>>>> 3946bcef679455fd6983ac82e19c63da442de7bd
 }

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/contact.css">
+    <title>Student Attendance System</title>
+<header>
+    <nav class="navbar">
+        <div class="logo">Student Attendance</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#feature">Feature</a></li>
+            <li><a href="#dashboard">Dashboard</a></li>
+            <li><a href="#report">Report</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#register">Register</a></li>
+        </ul>
+    </nav>
+</header>
+<body> 
+    <!-- ContactcUs-Form -->
+     <main class="container" aria-label="ContactUs-form for Smart Attendance system">
+  <h1>Contact Administrator</h1>
+  <p class="subtitle">For inquiries about the Smart Student Attendance system, customization, or support, fill out the form below.</p>
+  <form id="contactForm" autocomplete="on" onsubmit="handleSubmit(event)">
+    <div>
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" placeholder="Ademola Adesina" required />
+    </div>
+    <div>
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="Jademovie@example.edu" required />
+    </div>
+    <div>
+      <label for="role">Role</label>
+      <select id="role" name="role" required>
+        <option value="teacher">Teacher</option>
+        <option value="admin">Administrator</option>
+        <option value="parent">Parent</option>
+        <option value="student">Student</option>
+      </select>
+    </div>
+    <div>
+      <label for="department">Department / Class</label>
+      <input type="text" id="department" name="department" placeholder="e.g., Grade 10 - A" />
+    </div>
+    <div class="full">
+      <label for="message">Message</label>
+      <textarea id="message" name="message" placeholder="Tell us how we can help..." required></textarea>
+    </div>
+    <div class="full note" aria-live="polite" id="formNote"></div>
+    <button type="submit">Submit</button>
+  </form>
+</main>
+<div class="social-login">
+    <div class="social-login">
+        <p>Or login with:</p>
+        <div class="social-buttons">
+            <a href="#" class="btn social-btn">Google</a>
+            <a href="#" class="btn social-btn">Facebook</a>
+            <a href="#" class="btn social-btn">Twitter</a>
+            <a href="#" class="btn social-btn">LinkedIn</a>
+            <a href="#" class="btn social-btn">GitHub</a>
+            <a href="#" class="btn social-btn">Instagram</a>
+            <a href="#" class="btn social-btn">Apple</a>
+            <a href="#" class="btn social-btn">X</a></div>
+            <section class="footer">
+                <p>&copy;Jademovie 2026 |Smart Student Attendance System. All rights reserved.</p>
+</section>
+</div>
