@@ -23,7 +23,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 app.mount("/media", StaticFiles(directory="media"), name="media")
 
 
-@app.post ("/api/register", response_model=UserResponse, status_code = status.HTTP_201_CREATED)
+@app.post ("/api/register", response_model=UserPublic, status_code = status.HTTP_201_CREATED)
 def create_user(user:UserCreate, db: Annotated[Session , Depends(get_db)]):
     result = db.execute (   select(models.User) .where(models.User.username == user.username))
     existing_user = result.scalars.first()

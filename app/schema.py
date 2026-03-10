@@ -21,10 +21,21 @@ class UserPublic(BaseModel):
 class UserPrivate(UserPublic):
     email: EmailStr
     
+class UserUpdate(BaseModel):
+    name :str| None = Field( default=None ,min_length=1 , max_length=50)
+    username: str| None = Field( default=None ,min_length=1 , max_length=50)
+    email : EmailStr |None = Field( default=None ,max_length=120)
+    image_file : str | None = Field( default=None , min_length=1,max_length=200)
 
 
-class CheckLogBase(BaseModel):
-    username : str
+class Token(BaseModel):
+    access_token :str
+    token_type:str
+
+    
+class  CheckLogBase(BaseModel):
+
+    username: str
 
 
 class ChecklogCreate(CheckLogBase):
