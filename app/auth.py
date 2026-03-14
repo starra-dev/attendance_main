@@ -1,38 +1,51 @@
-import sqlite3
-from app.models import Profile
-from fastapi import FastAPI, Request
-from fastapi.templating import Jinja2Templates
+from datetime import UTC , datetime, timedelta
 
-app = FastAPI()
-conn = sqlite3.connect("attendance.db")
-template = Jinja2Templates(directory="/template/register.html")
-cur = conn.cursor()
-DATABASE_URL = "attendance.db"
+import jwt
+from fastapi.security import OAuth2PasswordBearer
+from pwdlib import PasswordHash
 
 
+from config import settings
 
-#JWT_TOKEN=jwt-token-loggoogle-access
+password_hash = PasswordHash.recommended()
 
-@app.post("/register")
-def save_profile():
-    create_profile = cur.execute('''CREATE TABLE IF NOT EXISTS Profile
-       name text,        
-       email text,
-       password text        
-                ''')
-        conn.commit()
-    return
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/users/token")
 
+def hash_password(password:str)-> str:
+    return password_hash.hash(password)
 
+def verify_password (plain_password:str , hashed_password:str)->bool:
+    return password_hash.verify(plain_password,hashed_password)
 
-@app.post("")
-def login():
-    #statement
-    return ""
+def create_access_token(data:dict , expires_delta: timedelta | None = None):
+    """CREATE A JWT ACCESS TOKEN."""
+    to_encode = data.copy()
 
+    if expires_delta:
+        expire = datetime.now(UTC) + expires_delta
+    else:
+        expire = datetime.now(UTC) + timedelta(minutes= settings.access_token_expire_minutes)
+    
+    to_encode.update({"exp":expire})
+    encoded_jwt = jwt.encode(
+        to_encode,
+        settings.secret_key.get_secret_value(),
+        algorithm=settings.algorithm,
+    )
+    return encoded_jwt
 
-def validatePassword():
-    return ""
-context = {"request": request, 
-           "title": "Home Page", 
-           "message": "Welcome to FastAPI HTML!"}
+def verify_access_token(token:str)->str | None:
+    """VERIFY A JWT access token and (user_id)if valid"""
+    try:
+        payload = jwt.decode(
+            token,
+            settings.secret_key.get_secret_value(),
+            algorithms=[settings.algorithms],
+            options={"require":["exp", "sub"]}
+        )
+    except jwt.InvalidTokenError:
+        return None
+    else:
+        return payload("sub")
+    
+    
