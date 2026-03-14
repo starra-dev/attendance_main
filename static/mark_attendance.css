@@ -1,12 +1,33 @@
 .container {
-    width: 300px;
-    height: 300px;
+    width: 450px;
+    height: 450px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: solid 1px black;
+    border: solid 1px #311803b9;
+    border-radius: 10px;
+    background-color: white;
     text-align: center;
+    box-shadow: 10px 10px 70px 20px #11b342
+    transition: ease-in-out 2s;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 10px;
+    color: #942020;
 
+}
+.container hover{
+    box-shadow: 10px 10px 70px 20px #11b342
+    transition: ease-in-out 4s
+}
+.text, .number{
+    height: 38px;
+    outline: none;
+    border-radius: 4px;
+    font-size: 15px;
+    padding-left: 10px;
+    align-items: center;
 }
 .checkin{
     width: 100%;
@@ -16,11 +37,26 @@
     align-items: center;
     text-align: center;
 }
+.btn{
+    width: 100px;
+    height: 38px;
+    border: none;
+    border-radius: 5px;
+    background-color: #942020;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+}
+.btn:hover {
+    background-color: #c02929;
+    border: 2px solid #942020;
+    transition: ease-in-out 4s;
+}
 body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: #f4f6f9;
+    background: #f7f9;
 }
 
 .navbar {

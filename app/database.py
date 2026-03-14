@@ -1,9 +1,19 @@
-import sqlite3
+from sqlalchemy import create_engine
+from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
+DATABASE_URL ="sqlite:///./attendance.db"
 
-con = sqlite3.connect("attendance.db")
+engine = create_engine(
+    DATABASE_URL,
+    connect_args= {"check_same_thread":False}
+)
 
-cur = con.cursor()
+SessionLocal = sessionmaker(autocommit=False, autoFlush=False, bind= engine)
 
+class Base(DeclarativeBase):
+    pass
 
-cur.execute(''' ''')
+def get_db():
+    with SessionLocal() as db:
+        yield db
+
