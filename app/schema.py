@@ -41,11 +41,12 @@ class  CheckLogBase(BaseModel):
 class ChecklogCreate(CheckLogBase):
     user_id: int                   # identifier of the user performing the checkin
     date: date
-    timezone: datetime
+    timezone: str
     action: bool
 
 class CheckLogResponse(CheckLogBase):
     model_config =ConfigDict(from_attributes=True)
     
     user_id: int 
-    date: date
+    timestamp: datetime
+    action: bool

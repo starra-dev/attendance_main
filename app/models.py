@@ -23,7 +23,7 @@ class User(Base):
 
     def image_path(self)-> str:
         if self.image_file:
-            return f"/media/profile/pic{self.image_file}"
+            return f"/media/profile_pic/{self.image_file}"
         return "/static/profile_pic/default.jpg"
     
 class Checkin(Base):
@@ -32,8 +32,8 @@ class Checkin(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     user_id: Mapped[int] = mapped_column(ForeignKey("user.id"), nullable=True, index=True)
-    timestamp:Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda:datetime.now(),)
-    action: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+    timestamp:Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda:datetime.now(UTC),)
+    action: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
     user: Mapped["User"] = relationship("User", back_populates="checkins")
    
 

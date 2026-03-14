@@ -18,15 +18,30 @@ router = APIRouter()
 
 @router.post ("", response_model=CheckLogResponse, status_code = status.HTTP_201_CREATED)
 def check_in(checkin:ChecklogCreate, db: Annotated[Session , Depends(get_db)]):
-    # make sure schema includes user_id (add if missing)
-    result = db.execute(select(models.Checkin).where(models.Checkin.user_id == checkin.user_id))
-    existing_log = result.scalars().first()
-
+    # Check if user exists
+    user_result = db.execute(select(models.User).where(models.User.id == checkin.user_id))
+    user = user_result.scalars().first()
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User not found"
+        )
+    
+    # Check if already checked in on this date
+    from sqlalchemy import func
+    existing_result = db.execute(
+        select(models.Checkin).where(
+            models.Checkin.user_id == checkin.user_id,
+            func.date(models.Checkin.timestamp) == checkin.date
+        )
+    )
+    existing_log = existing_result.scalars().first()
     if existing_log:
         raise HTTPException(
             status_code= status.HTTP_403_FORBIDDEN,
-            detail="User already checked in"
+            detail="User already checked in on this date"
         )
+    
     new_checkin = models.Checkin(
         user_id=checkin.user_id,
         action=checkin.action
@@ -35,7 +50,12 @@ def check_in(checkin:ChecklogCreate, db: Annotated[Session , Depends(get_db)]):
     db.commit()
     db.refresh(new_checkin)
 
-    return new_checkin
+    return {
+        "username": user.username,
+        "user_id": new_checkin.user_id,
+        "timestamp": new_checkin.timestamp,
+        "action": new_checkin.action
+    }
 
     
 @router.get ("/{user_id}/checkin", response_model=list[CheckLogResponse])
@@ -49,5 +69,12 @@ def get_user_log(user_id:int, db: Annotated[Session , Depends(get_db)]):
             status_code=status.HTTP_404_NOT_FOUND,
             detail="User not found"
         )
-    logs = user.checkins
+    logs = []
+    for checkin in user.checkins:
+        logs.append({
+            "username": user.username,
+            "user_id": checkin.user_id,
+            "timestamp": checkin.timestamp,
+            "action": checkin.action
+        })
     return logs

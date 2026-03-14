@@ -42,7 +42,7 @@ def create_user(user:UserCreate, db: Annotated[Session , Depends(get_db)]):
         name = user.name,
         username = user.username,
         email = user.email.lower(),
-        password_hash = hash_password(user.password),
+        passwordhash = hash_password(user.password),
 
     )
     db.add(new_user)
@@ -117,15 +117,26 @@ def get_user(user_id: int, db: Annotated[Session , Depends(get_db)]):
         )
 
 @router.patch ("/me/update", response_model=UserPrivate)
-def user_update(user_id: int, user_data:UserUpdate, db: Annotated[Session , Depends(get_db)]):
-    result = db.execute(select(models.User).where(models.User.id == user_id))
+def user_update(token: Annotated[str , Depends(oauth2_scheme)], user_data:UserUpdate, db: Annotated[Session , Depends(get_db)]):
+    user_id = verify_access_token(token)
+    if user_id is None:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                             detail="User not found")
+    try :
+        user_id_int = int(user_id)
+    except (TypeError,ValueError):
+        raise HTTPException(
+            status_code= status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid or Expired Token"
+        )
+    result = db.execute(select(models.User).where(models.User.id == user_id_int))
     user = result.scalars().first()
 
     if not user:
        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
     
-    if user_update.username is not None and user.username.lower() != user_update.username.lower():
-     result = db.execute(select(models.User).where(func.lower(models.User.username) == user_update.username.lower()))
+    if user_data.username is not None and user.username.lower() != user_data.username.lower():
+     result = db.execute(select(models.User).where(func.lower(models.User.username) == user_data.username.lower()))
      existing_username = result.scalars().first()
 
      if existing_username :
@@ -149,14 +160,27 @@ def user_update(user_id: int, user_data:UserUpdate, db: Annotated[Session , Depe
     if user_data.name is not None:
         user.name =user_data.name
 
-        return user_data
+    db.commit()
+    db.refresh(user)
+    return user
 
 
 
 
 @router.delete ("/me/delete", status_code= status.HTTP_204_NO_CONTENT)
-def delete_user_profile(user_id: int, db: Annotated[Session , Depends(get_db)]):
-    result = db.execute(select(models.User).where(models.User.id == user_id))
+def delete_user_profile(token: Annotated[str , Depends(oauth2_scheme)], db: Annotated[Session , Depends(get_db)]):
+    user_id = verify_access_token(token)
+    if user_id is None:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                             detail="User not found")
+    try :
+        user_id_int = int(user_id)
+    except (TypeError,ValueError):
+        raise HTTPException(
+            status_code= status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid or Expired Token"
+        )
+    result = db.execute(select(models.User).where(models.User.id == user_id_int))
     user = result.scalars().first()
 
     if not user:
