@@ -40,12 +40,12 @@ def verify_access_token(token:str)->str | None:
         payload = jwt.decode(
             token,
             settings.secret_key.get_secret_value(),
-            algorithms=[settings.algorithms],
+            algorithms=[settings.algorithm],
             options={"require":["exp", "sub"]}
         )
     except jwt.InvalidTokenError:
         return None
     else:
-        return payload("sub")
+        return payload.get("sub")
     
     

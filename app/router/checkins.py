@@ -29,8 +29,7 @@ def check_in(checkin:ChecklogCreate, db: Annotated[Session , Depends(get_db)]):
         )
     new_checkin = models.Checkin(
         user_id=checkin.user_id,
-        action=checkin.action,
-        Date=checkin.date  # if you intend to store the provided date
+        action=checkin.action
     )
     db.add(new_checkin)
     db.commit()
@@ -39,7 +38,7 @@ def check_in(checkin:ChecklogCreate, db: Annotated[Session , Depends(get_db)]):
     return new_checkin
 
     
-@router.get ("/api/checkin/{user_id}/checkins", response_model=list[CheckLogResponse])
+@router.get ("/{user_id}/checkin", response_model=list[CheckLogResponse])
 def get_user_log(user_id:int, db: Annotated[Session , Depends(get_db)]):
     # verify that the user exists before fetching logs
     result = db.execute(select(models.User).where(models.User.id == user_id))

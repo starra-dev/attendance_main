@@ -77,8 +77,8 @@ def login_user(form_data:Annotated[OAuth2PasswordRequestForm,Depends()],
 
 
 
-@router.get("/me", response_model=UserPublic)
-def get_user(
+@router.get("/me", response_model=UserPrivate)
+def get_profile(
              token: Annotated[str , Depends(oauth2_scheme)],
             db: Annotated[Session , Depends(get_db)]):
     """ Get the currently authenticated user."""
@@ -105,18 +105,18 @@ def get_user(
     return user
 
 @router.get("/{user_id}", response_model=UserPublic)
-def user_update(user_id: int, user_data:UserUpdate, db: Annotated[Session , Depends(get_db)]):
+def get_user(user_id: int, db: Annotated[Session , Depends(get_db)]):
     result = db.execute(select(models.User).where(models.User.id == user_id))
     user = result.scalars().first()
 
     if user:
         return user
     raise HTTPException(
-            status_code= status.HTTP_401_UNAUTHORIZED,
+            status_code= status.HTTP_404_NOT_FOUND,
             detail="User not found"
         )
 
-@router.patch ("/{user_id}", response_model=UserPrivate)
+@router.patch ("/me/update", response_model=UserPrivate)
 def user_update(user_id: int, user_data:UserUpdate, db: Annotated[Session , Depends(get_db)]):
     result = db.execute(select(models.User).where(models.User.id == user_id))
     user = result.scalars().first()
@@ -132,28 +132,30 @@ def user_update(user_id: int, user_data:UserUpdate, db: Annotated[Session , Depe
          raise HTTPException (status_code= status.HTTP_400_BAD_REQUEST,
                               detail="Username Already in use")
          
-    if user_update.email is not None and user.email.lower() != user_update.email.lower():
-        result = db.execute(select(models.User).where(func.lower(models.User.email) == user_update.email.lower()))
+    if user_data.email is not None and user.email.lower() != user_data.email.lower():
+        result = db.execute(select(models.User).where(func.lower(models.User.email) == user_data.email.lower()))
         existing_email = result.scalars().first()
 
         if existing_email :
             raise HTTPException (status_code= status.HTTP_400_BAD_REQUEST,
                                 detail="Email is Already registered")
         
-    if user_update.username is not None:
-        user.username =user_update.username
-    if user_update.email is not None:
-        user.email =user_update.email.lower()
-    if user_update.image_file is not None:
-        user.image_file =user_update.image_file
-    if user_update.name is not None:
-        user.name =user_update.name
+    if user_data.username is not None:
+        user.username =user_data.username
+    if user_data.email is not None:
+        user.email =user_data.email.lower()
+    if user_data.image_file is not None:
+        user.image_file =user_data.image_file
+    if user_data.name is not None:
+        user.name =user_data.name
+
+        return user_data
 
 
 
 
-@router.delete ("/{user_id}", status_code= status.HTTP_204_NO_CONTENT)
-def delete_user(user_id: int, db: Annotated[Session , Depends(get_db)]):
+@router.delete ("/me/delete", status_code= status.HTTP_204_NO_CONTENT)
+def delete_user_profile(user_id: int, db: Annotated[Session , Depends(get_db)]):
     result = db.execute(select(models.User).where(models.User.id == user_id))
     user = result.scalars().first()
 
