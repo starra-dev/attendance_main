@@ -53,10 +53,10 @@ def create_user(user:UserCreate, db: Annotated[Session , Depends(get_db)]):
 
 
 @router.post("/token",response_model=Token)
-def login_user(form_data:Annotated[OAuth2PasswordRequestForm,Depends], 
+def login_user(form_data:Annotated[OAuth2PasswordRequestForm,Depends()], 
                db: Annotated[Session , Depends(get_db)]):
    # OAuth2PasswordRequestForm uses "username" field but we treat it as email.....
-    result = db.execute(select(models.User).where(func.lower(models.User.email)== form_data.username.lower())),
+    result = db.execute(select(models.User).where(func.lower(models.User.email)== form_data.username.lower()))
     user = result.scalars().first()
 
     #verify user exists and password is correct
@@ -77,7 +77,7 @@ def login_user(form_data:Annotated[OAuth2PasswordRequestForm,Depends],
 
 
 
-@router.get("/{user_id}", response_model=UserPublic)
+@router.get("/me", response_model=UserPublic)
 def get_user(
              token: Annotated[str , Depends(oauth2_scheme)],
             db: Annotated[Session , Depends(get_db)]):
