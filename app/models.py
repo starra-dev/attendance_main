@@ -19,7 +19,7 @@ class User(Base):
         nullable=True,
         default=None
     )  
-    checkins: Mapped[list["Checkin"]] = relationship("Checkin", back_populates="user")
+    checkins: Mapped[list["Checkin"]] = relationship("Checkin", back_populates="user" ,cascade="all, delete-orphan")
 
     def image_path(self)-> str:
         if self.image_file:
