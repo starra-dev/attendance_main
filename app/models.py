@@ -21,6 +21,7 @@ class User(Base):
     )  
     checkins: Mapped[list["Checkin"]] = relationship("Checkin", back_populates="user" ,cascade="all, delete-orphan")
 
+    @property
     def image_path(self)-> str:
         if self.image_file:
             return f"/media/profile_pic/{self.image_file}"

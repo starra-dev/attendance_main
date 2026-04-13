@@ -50,12 +50,12 @@ def check_in(checkin:ChecklogCreate, db: Annotated[Session , Depends(get_db)]):
     db.commit()
     db.refresh(new_checkin)
 
-    return {
-        "username": user.username,
-        "user_id": new_checkin.user_id,
-        "timestamp": new_checkin.timestamp,
-        "action": new_checkin.action
-    }
+    return CheckLogResponse(
+        username= user.username,
+        user_id= new_checkin.user_id,
+        timestamp= new_checkin.timestamp,
+        action= new_checkin.action
+    )
 
     
 @router.get ("/{user_id}/checkin", response_model=list[CheckLogResponse])
@@ -71,10 +71,10 @@ def get_user_log(user_id:int, db: Annotated[Session , Depends(get_db)]):
         )
     logs = []
     for checkin in user.checkins:
-        logs.append({
-            "username": user.username,
-            "user_id": checkin.user_id,
-            "timestamp": checkin.timestamp,
-            "action": checkin.action
-        })
+        logs.append(CheckLogResponse(
+            username= user.username,
+            user_id= checkin.user_id,
+            timestamp= checkin.timestamp,
+            action= checkin.action
+        ))
     return logs

@@ -34,7 +34,6 @@ class Token(BaseModel):
 
     
 class  CheckLogBase(BaseModel):
-
     username: str
 
 

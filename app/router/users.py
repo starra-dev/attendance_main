@@ -6,7 +6,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload ,Session
 from fastapi.security import OAuth2PasswordRequestForm
 from datetime import datetime, UTC, timedelta
-
+from fastapi.responses import RedirectResponse
+from fastapi.templating import Jinja2Templates
 
 import app.models as models
 from config import settings
@@ -18,11 +19,14 @@ from app.auth import verify_password,verify_access_token,create_access_token,oau
 router = APIRouter()
 
 
+templates= Jinja2Templates(directory="template")
 
-@router.post ("",
+
+@router.post("/register",
                response_model=UserPrivate,
                  status_code = status.HTTP_201_CREATED)
 def create_user(user:UserCreate, db: Annotated[Session , Depends(get_db)]):
+
     result = db.execute (   select(models.User) .where(func.lower(models.User.username) == user.username.lower()))
     existing_user = result.scalars.first()
     result = db.execute (   select(models.User) .where(func.lower(models.User.email) == user.email.lower()))
@@ -48,7 +52,6 @@ def create_user(user:UserCreate, db: Annotated[Session , Depends(get_db)]):
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
-
     return new_user
 
 
@@ -61,7 +64,7 @@ def login_user(form_data:Annotated[OAuth2PasswordRequestForm,Depends()],
 
     #verify user exists and password is correct
 
-    if not user or not verify_password(form_data.password, user.password_hash) :
+    if not user or not verify_password(form_data.password, user.passwordhash) :
         raise HTTPException(
             status_code= status.HTTP_401_UNAUTHORIZED,
             detail= "Incorrect email or password"
@@ -116,7 +119,7 @@ def get_user(user_id: int, db: Annotated[Session , Depends(get_db)]):
             detail="User not found"
         )
 
-@router.patch ("/me/update", response_model=UserPrivate)
+@router.put("/me/update", response_model=UserPrivate)
 def user_update(token: Annotated[str , Depends(oauth2_scheme)], user_data:UserUpdate, db: Annotated[Session , Depends(get_db)]):
     user_id = verify_access_token(token)
     if user_id is None:

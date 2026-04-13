@@ -29,24 +29,14 @@
     <li><a href="#">User</a></li>
    </ul>
   </nav>
- </div>
-    <div class="container">
-        <div class="sidebar">
-            <p><button>Student Attendance</button></p>
-            <p><button>Staff Attendance</button></p>
-            <p><button>Total Student Attendance</button></p>
-            <p><button>Total Staff Attendance</button></p>
-        </div>
+
  <div class="main">
         <div class="profile-card"> 
-            <img src="{{ user.profile_pic }}" alt="Profile Picture" width="200px" height="250px"> 
+            <img src="{{ user.image_path() }}" alt="Profile Picture" width="200px" height="250px"> 
         </div>
-            <h1>Welcome, {{ username }}!</h1> 
-            <p>Fullname: {{ fullname }}</p> 
-            <p>Email: {{ email }}</p> 
-            <p>Total Present: {{ total_present }}</p> 
-            <p>Registered since: {{ join_date }}</p> 
-    </div>
+            <h1>Welcome, {{ user.username }}!</h1> 
+            <p>Fullname: {{ user.name }}</p> 
+            <p>Email: {{ user.email }}</p>
  </div>
 </body>
 </html>
