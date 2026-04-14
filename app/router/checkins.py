@@ -4,11 +4,13 @@ from fastapi import APIRouter, Depends, HTTPException,status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload ,Session
+from sqlalchemy import func
 
 
 import app.models as models
 from app.database import engine , Base , get_db
 from app.schema import CheckLogResponse,ChecklogCreate
+from app.auth import CurrentUser
 
 
 router = APIRouter()
@@ -17,8 +19,8 @@ router = APIRouter()
 
 
 @router.post ("", response_model=CheckLogResponse, status_code = status.HTTP_201_CREATED)
-def check_in(checkin:ChecklogCreate, db: Annotated[Session , Depends(get_db)]):
-    # Check if user exists
+def check_in(checkin:ChecklogCreate, current_user: CurrentUser, db: Annotated[Session , Depends(get_db)]):
+
     user_result = db.execute(select(models.User).where(models.User.id == checkin.user_id))
     user = user_result.scalars().first()
     if not user:
@@ -28,10 +30,9 @@ def check_in(checkin:ChecklogCreate, db: Annotated[Session , Depends(get_db)]):
         )
     
     # Check if already checked in on this date
-    from sqlalchemy import func
     existing_result = db.execute(
         select(models.Checkin).where(
-            models.Checkin.user_id == checkin.user_id,
+            models.Checkin.user_id == current_user.user_id,
             func.date(models.Checkin.timestamp) == checkin.date
         )
     )
@@ -43,7 +44,7 @@ def check_in(checkin:ChecklogCreate, db: Annotated[Session , Depends(get_db)]):
         )
     
     new_checkin = models.Checkin(
-        user_id=checkin.user_id,
+        user_id=current_user.user_id,
         action=checkin.action
     )
     db.add(new_checkin)
@@ -59,11 +60,14 @@ def check_in(checkin:ChecklogCreate, db: Annotated[Session , Depends(get_db)]):
 
     
 @router.get ("/{user_id}/checkin", response_model=list[CheckLogResponse])
-def get_user_log(user_id:int, db: Annotated[Session , Depends(get_db)]):
-    # verify that the user exists before fetching logs
-    result = db.execute(select(models.User).where(models.User.id == user_id))
-    user = result.scalars().first()
-
+def get_user_log(user_id:int,current_user:CurrentUser, db: Annotated[Session , Depends(get_db)]):
+    if not current_user:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="User not permitted"
+        )
+    user_result = db.execute(select(models.User).where(models.User.id == user_id).options(selectinload(models.User.checkins)))
+    user = user_result.scalars().first()
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,

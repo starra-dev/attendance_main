@@ -35,17 +35,13 @@ class Token(BaseModel):
     
 class  CheckLogBase(BaseModel):
     username: str
-
-
-class ChecklogCreate(CheckLogBase):
-    user_id: int                   # identifier of the user performing the checkin
     date: date
     timezone: str
     action: bool
 
+
+class ChecklogCreate(CheckLogBase):                # identifier of the user performing the checkin
+    pass
+
 class CheckLogResponse(CheckLogBase):
     model_config =ConfigDict(from_attributes=True)
-    
-    user_id: int 
-    timestamp: datetime
-    action: bool

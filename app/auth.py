@@ -10,9 +10,9 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 
-import models
+import app.models as models
 from config import settings
-from database import get_db
+from app.database import get_db
 
 password_hash = PasswordHash.recommended()
 
@@ -85,4 +85,4 @@ def get_current_user(
     )
     return user
 
-CurrentUser = get_current_user()
+CurrentUser = Annotated[models.User,Depends(get_current_user)]

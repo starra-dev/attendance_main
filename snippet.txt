@@ -1,0 +1,6 @@
+@router.post("/token", response_model=Token)
+def login_for_access_token(
+    form_data: Annotated[OAuth2PasswordrequestForm,Depends()],
+    db:Annotated[Session, Depends(get_db)],
+):
+
